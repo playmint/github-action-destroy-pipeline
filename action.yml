@@ -1,0 +1,33 @@
+# action.yml
+name: 'Destroy Concourse Pipeline'
+author: playmint
+description: 'Removes a concourse pipeline'
+branding:
+  icon: plus-circle
+  color: green
+inputs:
+  url:
+    description: 'The base concourse URL'
+    required: true
+  team:
+    description: 'The concourse team where the pipeline lives'
+    required: true
+    default: 'main'
+  pipeline-name:
+    description: 'The concourse pipeline where the job lives'
+    required: true
+  username:
+    description: 'A local auth user with the rights to trigger the job'
+    required: true
+  password:
+    description: 'The password for concourse-user'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    CONCOURSE_URL: ${{ inputs.url }}
+    CONCOURSE_USERNAME: ${{ inputs.username }}
+    CONCOURSE_PASSWORD: ${{ inputs.password }}
+    CONCOURSE_TEAM: ${{ inputs.team }}
+    CONCOURSE_PIPELINE_NAME: ${{ inputs.pipeline-name }}
